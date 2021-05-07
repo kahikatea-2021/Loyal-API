@@ -58,8 +58,6 @@ function storeCreateCard({ storeId, rewardThreshold, reward }, db = connection) 
 	})
 }
 
-
-
 module.exports = {
 	stampLoyaltyCard,
 	getStoreCards,

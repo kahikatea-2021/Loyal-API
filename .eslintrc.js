@@ -9,21 +9,26 @@ module.exports = {
 		'ecmaVersion': 12
 	},
 	'rules': {
-		'indent': [
+		indent: [
 			'error',
-			'tab'
+			'tab',
 		],
+		// eslint-disable-next-line no-bitwise
+		'no-tabs': ['error', { allowIndentationTabs: true }],
 		'linebreak-style': [
 			'error',
-			'unix'
+			'unix',
 		],
-		'quotes': [
+		'func-names': 0,
+		quotes: [
 			'error',
-			'single'
+			'single',
 		],
-		'semi': [
+		semi: [
 			'error',
-			'never'
-		]
+			'never',
+		],
+		'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+		'space-before-function-paren': 'off',
 	}
 }
