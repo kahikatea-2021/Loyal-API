@@ -1,3 +1,4 @@
 node_modules
 .env
 db/dev.sqlite3
+service-account-crendentials.json
