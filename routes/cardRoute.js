@@ -1,4 +1,4 @@
-const { stampLoyaltyCard, getStoreCards } = require('../db/card')
+const { stampLoyaltyCard, getStoreCards, storeCreateCard } = require('../db/card')
 
 const router = require('express').Router()
 
@@ -23,6 +23,23 @@ router.patch('/', (req, res) => {
 
 	stampLoyaltyCard(userId, storeId).then( data => {
 		res.json(data)
+	}).catch( err => {
+		console.error(err.message)
+		res.status(500).json({
+			error: {
+				title: 'Error processing request'
+			}
+		})
+	})
+})
+
+router.post('/', (req, res) => {
+	storeCreateCard(req.body).then(ids => {
+		console.log(ids)
+		res.json({
+			id: ids[0],
+		...req.body
+		}) 
 	}).catch( err => {
 		console.error(err.message)
 		res.status(500).json({
