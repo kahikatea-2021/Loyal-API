@@ -6,6 +6,9 @@ const storeUsers = require('./mockJsonData/store_users.json').store_users
 const connection = require('./connection')
 
 function stampLoyaltyCard(userId, storeId) {
+	console.log(stores)
+	console.log(cards)
+	console.log(storeUsers)
 
 	return new Promise( (resolve, reject) => {
 		const storeUser = storeUsers.find((storeUser) => storeUser.user_id === userId && storeUser.store_id === storeId)
@@ -14,11 +17,11 @@ function stampLoyaltyCard(userId, storeId) {
 		if (card.total > storeUser.stamp_count) {
 			storeUser.stamp_count++
 		}
-    
+		console.log(storeUser.stamp_count === cards.find((card) => card.store_id === store.id).total)
 		resolve({
 			name: store.store_name,
 			stampCount: storeUser.stamp_count,
-			shouldRedeem: storeUser.stamp_count === cards.cards.find((card) => card.store_id === store.id).total,
+			shouldRedeem: storeUser.stamp_count === cards.find((card) => card.store_id === store.id).total,
 		})
 	})
     

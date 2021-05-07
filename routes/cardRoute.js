@@ -8,12 +8,8 @@ router.patch('/', (req, res) => {
     
 	const { userId, storeId } = req.body
 
-	stampLoyaltyCard(userId, storeId).then( () => {
-		res.json({
-			title: {
-				data: 'hello'
-			}
-		})
+	stampLoyaltyCard(userId, storeId).then( data => {
+		res.json(data)
 	}).catch( err => {
 		console.error(err.message)
 		res.status(500).json({
