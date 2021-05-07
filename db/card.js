@@ -1,7 +1,3 @@
-const stores = require('./mockJsonData/store_users.json').store_users
-const cards = require('./mockJsonData/cards.json').cards
-const storeUsers = require('./mockJsonData/store_users.json').store_users
-
 const connection = require('./connection')
 
 function getStoreCards(id, db = connection) {
@@ -9,34 +5,48 @@ function getStoreCards(id, db = connection) {
 		.select()
 }
 
-function stampLoyaltyCard(userId, storeId) {
+function stampLoyaltyCard(userId, storeId, db = connection) {
 
-	return db('store_users').where('store_id', storeId).first( storeUser => {
-		if (storeUser) {
-            
-		}
-		return null
-	})
-
-	/*return new Promise( (resolve, reject) => {
-
-		return db('cards')
-			.where('store_id', storeId)
-			.leftJoin('store_users', )
-
-		const storeUser = storeUsers.find((storeUser) => storeUser.user_id === userId && storeUser.store_id === storeId)
-		const card = cards.find((card) => card.store_id === storeUser.store_id)
-		const store = stores.find((store) => store.id === storeUser.store_id)
-		if (card.total > storeUser.stamp_count) {
-			storeUser.stamp_count++
-		}
-		console.log(storeUser.stamp_count === cards.find((card) => card.store_id === store.id).total)
-		resolve({
-			name: store.store_name,
-			stampCount: storeUser.stamp_count,
-			shouldRedeem: storeUser.stamp_count === cards.find((card) => card.store_id === store.id).total,
+	return db('store_users')
+		.where('store_users.store_id', storeId)
+		.where('user_id', userId)
+		.leftJoin('cards', 'store_users.store_id', 'cards.store_id')
+		.leftJoin('stores', 'store_users.store_id', 'stores.id')
+		.select(
+			'store_users.id', 
+			'store_users.stamp_count as stampCount', 
+			'store_users.store_id as storeId', 
+			'store_users.user_id as userId',
+			'cards.reward_threshold as rewardThreshold',
+			'cards.reward'
+		)
+		.first()
+		.then( userCard => {
+			if (!userCard)
+				throw new Error()
+			
+			return {
+				id: userCard.id,
+				stampCount: userCard.stampCount < userCard.rewardThreshold ? userCard.stampCount+1 : userCard.stampCount,
+				storeId: userCard.storeId,
+				userId: userCard.userId,
+				shouldReedem: userCard.stampCount === userCard.rewardThreshold,
+				rewardThreshold: userCard.rewardThreshold,
+				reward: userCard.reward
+			}
+		}).then(userCard => {
+			if (userCard && !userCard.shouldReedem) {
+				return db('store_users')
+					.where('store_users.store_id', storeId)
+					.where('user_id', userId)
+					.update({
+						stamp_count: userCard.stampCount
+					}).then(() => {
+						return userCard
+					})
+			}
+			return userCard
 		})
-	})*/
     
 }
 
