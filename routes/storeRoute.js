@@ -8,8 +8,6 @@ router.get('/:id', (req, res) => {
   
 	getStoresById(id)
 		.then((stores) => {
-			console.log(stores)
-    
 			return res.json({ stores })
 		})
 		.catch((err) => {
@@ -25,8 +23,6 @@ router.get('/:id', (req, res) => {
 router.get('/', (req, res) => {
 	getStores()
 		.then((stores) => {
-			console.log(stores)
-			
 			return res.json({ stores })
 		})
 		.catch((err) => {

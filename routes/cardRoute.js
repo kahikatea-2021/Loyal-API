@@ -1,4 +1,4 @@
-const { stampLoyaltyCard, getStoreCards, storeCreateCard } = require('../db/card')
+const {  getStoreCards, storeCreateCard } = require('../db/card')
 const router = require('express').Router()
 
 router.get('/', (req, res) => {
@@ -14,22 +14,6 @@ router.get('/', (req, res) => {
 			})
 		})
 	}
-})
-
-router.patch('/', (req, res) => {
-    
-	const { userId, storeId } = req.body
-
-	stampLoyaltyCard(userId, storeId).then( data => {
-		res.json(data)
-	}).catch( err => {
-		console.error(err.message)
-		res.status(500).json({
-			error: {
-				title: 'Unable to stamp loyalty card'
-			}
-		})
-	})
 })
 
 router.post('/', (req, res) => {
