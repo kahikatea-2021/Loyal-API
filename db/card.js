@@ -10,7 +10,20 @@ function getStoreCards(id, db = connection) {
 }
 
 function stampLoyaltyCard(userId, storeId) {
-	return new Promise( (resolve, reject) => {
+
+	return db('store_users').where('store_id', storeId).first( storeUser => {
+		if (storeUser) {
+            
+		}
+		return null
+	})
+
+	/*return new Promise( (resolve, reject) => {
+
+		return db('cards')
+			.where('store_id', storeId)
+			.leftJoin('store_users', )
+
 		const storeUser = storeUsers.find((storeUser) => storeUser.user_id === userId && storeUser.store_id === storeId)
 		const card = cards.find((card) => card.store_id === storeUser.store_id)
 		const store = stores.find((store) => store.id === storeUser.store_id)
@@ -23,7 +36,7 @@ function stampLoyaltyCard(userId, storeId) {
 			stampCount: storeUser.stamp_count,
 			shouldRedeem: storeUser.stamp_count === cards.find((card) => card.store_id === store.id).total,
 		})
-	})
+	})*/
     
 }
 
