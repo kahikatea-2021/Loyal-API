@@ -40,9 +40,18 @@ function stampLoyaltyCard(userId, storeId) {
     
 }
 
+function storeCreateCard({ storeId, rewardThreshold, reward }, db = connection) {
+	return db('cards').insert({
+		store_id: storeId,
+		reward_threshold: rewardThreshold,
+		reward: reward
+	})
+}
+
 
 
 module.exports = {
 	stampLoyaltyCard,
-	getStoreCards
+	getStoreCards,
+	storeCreateCard
 }
