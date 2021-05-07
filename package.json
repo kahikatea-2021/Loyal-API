@@ -9,7 +9,8 @@
     "dev": "nodemon",
     "db:migrate": "npm run knex migrate:latest",
     "db:seed": "npm run knex seed:run",
-    "lint": "eslint --ext .js,.jsx ."
+    "lint": "eslint --ext .js,.jsx .",
+    "knex": "knex --knexfile db/knexfile.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "homepage": "https://github.com/kahikatea-2021/Loyal-API#readme",
   "dependencies": {
     "dotenv": "^9.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "eslint": "^7.25.0",
