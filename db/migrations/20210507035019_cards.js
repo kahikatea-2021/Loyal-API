@@ -2,9 +2,9 @@
 exports.up = (knex) => {
 	return knex.schema.createTable('cards', table => {
 		table.increments('id').primary()
-		table.integer('store_id').references('stores.id')
-		table.integer('reward_threshold')
-		table.string('reward')
+		table.integer('store_id').references('stores.id').notNullable()
+		table.integer('reward_threshold').notNullable()
+		table.string('reward').notNullable()
 	})
 }
   
