@@ -1,0 +1,18 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "first_name": "John",
+            "last_name": "Wick",
+            "email": "john.wick@hotmail.com",
+            "phone": "6421123000"
+        },
+        {
+            "id": 2,
+            "first_name": "Claire",
+            "last_name": "Daines",
+            "email": "claire4romeo@gsnail.com",
+            "phone": "6421123666"
+        }
+    ]
+}
