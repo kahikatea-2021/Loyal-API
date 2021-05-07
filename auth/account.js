@@ -1,30 +1,22 @@
 const admin = require('firebase-admin')
+const { auth } = admin
 
 function createUser({email, password, userName, firstName, lastName, phone}) {
 	
 	const customClaim = {
+		userName: userName,
 		firstName: firstName,
 		lastName: lastName,
-		phoneNumber: phone
+		phoneNumber: phone,
 	}
 
-	return admin.auth().createUser({
+	return auth().createUser({
 		email: email,
 		password: password,
-		displayName: userName,
         
 	}).then( userRecord => {
-		return admin.auth().createCustomToken(userRecord.uid, customClaim)
-	}).then( token => {
-		console.log(token)
-		/*admin.auth().getUser(userId).then( userRecord => {
-			console.log(userRecord.customClaims)
-		})*/
-		return token
+		return auth().createCustomToken(userRecord.uid, customClaim)
 	})
-
-    
-
 
 }
 
