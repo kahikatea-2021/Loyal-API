@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
 			console.error(err)
 			res.status(500).json({
 				error: {
-					title: 'Unable to retrieve stores'
+					title: 'Unable to retrieve store'
 				}
 			})
 		})
@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
 			console.error(err)
 			res.status(500).json({
 				error: {
-					title: 'Unable to retrieve stores'
+					title: 'Unable to retrieve store list'
 				}
 			})
 		})
