@@ -5,7 +5,9 @@ const server = express()
 server.use(express.json())
 
 const cardRoute = require('./routes/cardRoute')
+const accountRoute = require('./routes/authRoute')
 
 server.use('/api/v1/card', cardRoute)
+server.use('/api/v1/account', accountRoute)
 
 module.exports = server
