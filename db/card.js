@@ -2,14 +2,14 @@ const stores = require('./mockJsonData/store_users.json').store_users
 const cards = require('./mockJsonData/cards.json').cards
 const storeUsers = require('./mockJsonData/store_users.json').store_users
 
-
 const connection = require('./connection')
 
-function stampLoyaltyCard(userId, storeId) {
-	console.log(stores)
-	console.log(cards)
-	console.log(storeUsers)
+function getStoreCards(id, db = connection) {
+	return db('cards').where('store_id', id)
+		.select()
+}
 
+function stampLoyaltyCard(userId, storeId) {
 	return new Promise( (resolve, reject) => {
 		const storeUser = storeUsers.find((storeUser) => storeUser.user_id === userId && storeUser.store_id === storeId)
 		const card = cards.find((card) => card.store_id === storeUser.store_id)
@@ -27,6 +27,9 @@ function stampLoyaltyCard(userId, storeId) {
     
 }
 
+
+
 module.exports = {
-	stampLoyaltyCard
+	stampLoyaltyCard,
+	getStoreCards
 }

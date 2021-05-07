@@ -1,11 +1,5 @@
 const connection = require('./connection')
 
-function getStoreCards(id, db = connection) {
-	console.log(id)
-	return db('cards').where('store_id', id)
-		.select()
-}
-
 function getStores (db = connection) {
 	return db ('stores').select()
 }
@@ -33,7 +27,6 @@ function getStoresById (id, db = connection) {
 }
 
 module.exports = {
-	getStoreCards,
 	getStores,
 	getStoresById
 }

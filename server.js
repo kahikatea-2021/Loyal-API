@@ -11,6 +11,6 @@ const storeRoute = require('./routes/storeRoute')
 
 server.use('/api/v1/card', cardRoute)
 server.use('/api/v1/account', accountRoute)
-server.use('/api/v1/store', storeRoute)
+server.use('/api/v1/stores', storeRoute)
 
 module.exports = server
