@@ -1,0 +1,13 @@
+{
+    "stores": [
+        {
+            "id": 1,
+            "store_name": "Coffee Shop",
+            "admin_first_name": "Beff",
+            "admin_last_name": "Jesos",
+            "email": "bjesos@coffee.org",
+            "phone": "091231234",
+            "address": "12 Morgan Street"
+        }
+    ]
+}

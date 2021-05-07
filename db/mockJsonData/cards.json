@@ -1,0 +1,10 @@
+{
+    "cards": [
+        {
+            "id": 1,
+            "store_id": 1,
+            "total": 10,
+            "reward": "Free coffee"
+        }
+    ]
+}
