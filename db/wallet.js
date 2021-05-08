@@ -7,6 +7,15 @@ function getUserWallet(userId, db = connection) {
 		.select()
 }
 
+function walletAddCard({userId, cardId}, db = connection) {
+	return db('wallets')
+		.insert({
+			user_id: userId,
+			card_id: cardId
+		})
+}
+
 module.exports = {
-	getUserWallet
+	getUserWallet,
+	walletAddCard
 }
