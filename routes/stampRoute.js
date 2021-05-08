@@ -4,6 +4,7 @@ const router = require('express').Router()
 router.patch('/', (req, res) => {
     
 	const { userId, storeId } = req.body
+	console.log(req.body)
 
 	stampLoyaltyCard(userId, Number(storeId)).then( data => {
 		res.json(data)

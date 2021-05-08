@@ -1,5 +1,4 @@
-const admin = require('firebase-admin')
-const { auth } = admin
+const {auth} = require('../auth')
 
 function createUser({email, password, userName, firstName, lastName, phone}) {
 	

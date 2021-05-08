@@ -5,6 +5,17 @@ function getStoreCards(id, db = connection) {
 		.select()
 }
 
+function resetLoyaltyCard({userId, storeId}, db = connection) {
+	return db('store_users')
+		.where('store_users.store_id', storeId)
+		.where('user_id', userId)
+		.update({
+			stamp_count: -1
+		}).then(() => {
+			return stampLoyaltyCard(userId, storeId)
+		})
+}
+
 function stampLoyaltyCard(userId, storeId, db = connection) {
 
 	return db('store_users')
@@ -30,7 +41,7 @@ function stampLoyaltyCard(userId, storeId, db = connection) {
 				stampCount: userCard.stampCount < userCard.rewardThreshold ? userCard.stampCount+1 : userCard.stampCount,
 				storeId: userCard.storeId,
 				userId: userCard.userId,
-				shouldReedem: userCard.stampCount === userCard.rewardThreshold,
+				shouldRedeem: userCard.stampCount >= userCard.rewardThreshold-1,
 				rewardThreshold: userCard.rewardThreshold,
 				reward: userCard.reward
 			}
@@ -58,8 +69,18 @@ function storeCreateCard({ storeId, rewardThreshold, reward }, db = connection) 
 	})
 }
 
+function getUserCard({ userId, storeId}, db = connection) {
+	return  db('store_users')
+		.where('store_users.store_id', storeId)
+		.where('user_id', userId)
+		.select()
+		.first()
+}
+
 module.exports = {
 	stampLoyaltyCard,
 	getStoreCards,
-	storeCreateCard
+	storeCreateCard,
+	getUserCard,
+	resetLoyaltyCard
 }

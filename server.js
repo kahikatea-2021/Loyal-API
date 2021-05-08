@@ -1,5 +1,5 @@
 require('dotenv').config()
-require('./auth')
+require('./auth').initialize()
 const express = require('express')
 const server = express()
 server.use(express.json())

@@ -4,8 +4,9 @@ const router = require('express').Router()
 
 router.get('/:id', (req, res) => {
 	const userId = req.params.id
+	const storeId = req.query.storeId
 	if (userId) {
-		getUserWallet(userId).then( userWallet => {
+		getUserWallet(userId, storeId).then( userWallet => {
 			res.json(userWallet)
 		})
 	}
