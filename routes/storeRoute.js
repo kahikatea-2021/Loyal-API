@@ -1,4 +1,5 @@
-const { getStoresById, getStores } = require('../db/store')
+const { createUser } = require('../auth/account')
+const { getStoresById, getStores, createStore } = require('../db/store')
 const { generateQRCode } = require('../util/qrCode')
 
 const router = require('express').Router()
@@ -37,6 +38,27 @@ router.get('/', (req, res) => {
 				}
 			})
 		})
+})
+
+router.post('/', (req, res) => {
+	createUser(true, req.body).then(userRecord => {
+		createStore({
+			firebaseId: userRecord.uid,
+			...req.body
+		}).then(ids => {
+			res.json({
+				id: ids[0],
+				...req.body
+			})
+		}).catch(err => {
+			console.error(err.message)
+			res.status(500).json({
+				error: {
+					title: 'Unable to register your Store'
+				}
+			})
+		})
+	})
 })
 
 module.exports = router
