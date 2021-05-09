@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { createUser } = require('../auth/account')
 
 router.post('/register', (req, res) => {
-	createUser(req.body).then( token => {
+	createUser(false, req.body).then( token => {
 		res.json({
 			token: token
 		})
