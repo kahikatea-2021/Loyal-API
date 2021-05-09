@@ -3,14 +3,14 @@ const { auth } = require('./')
 function verifyUser(claim) {
 
 	return (req, res, next) => {
-		const authorizationHeader = req.header.authorization
-        
+		const authorizationHeader = req.headers.authorization
 		if (authorizationHeader) {
 			const token = authorizationHeader.split(' ')[1]
         
 			auth().verifyIdToken(token).then( decodedToken => {
 				auth().getUser(decodedToken.uid).then( userData => {
 					if (claim.shop === userData.customClaims.shop) {
+						req.user = decodedToken
 						next()
 					}
 				})
@@ -31,4 +31,8 @@ function verifyUser(claim) {
 		}
  
 	}
+}
+
+module.exports = {
+	verifyUser
 }

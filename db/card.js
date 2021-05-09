@@ -33,6 +33,7 @@ function stampLoyaltyCard(userId, storeId, db = connection) {
 		)
 		.first()
 		.then( userCard => {
+			console.log(userCard)
 			if (!userCard)
 				throw new Error()
 			

@@ -16,24 +16,30 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/store/register', (req, res) => {
-	createUser(true, req.body).then(userRecord => {
-		createStore({
-			firebaseId: userRecord.uid,
-			...req.body
-		}).then(ids => {
-			res.json({
-				id: ids[0],
+	createUser(true, req.body)
+		.then(userRecord => {
+			createStore({
+				firebaseId: userRecord.uid,
 				...req.body
+			}).then(ids => {
+				res.json({
+					id: ids[0],
+					...req.body
+				})
+			}).catch(err => {
+				console.error(err.message)
+				res.status(500).json({
+					error: {
+						title: 'Unable to register your Store'
+					}
+				})
 			})
 		}).catch(err => {
-			console.error(err.message)
+			console.error(err.errorInfo)
 			res.status(500).json({
-				error: {
-					title: 'Unable to register your Store'
-				}
+				message: err.errorInfo.code
 			})
 		})
-	})
 })
 
 module.exports = router

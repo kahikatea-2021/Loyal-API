@@ -12,7 +12,6 @@ function getStoresById (id, db = connection) {
 			'store_name as storeName',
 			'admin_first_name as firstName',
 			'admin_last_name as lastName',
-			'phone',
 			'address'
 		)
 		.then((result) =>{
@@ -28,7 +27,7 @@ function getStoresById (id, db = connection) {
 
 function createStore ({ firebaseId, storeName, adminFirstName, adminLastName, address }, db = connection) {
 	return db ('stores').insert({
-		firebase_id: firebaseId,
+		id: firebaseId,
 		store_name: storeName,
 		admin_first_name: adminFirstName,
 		admin_last_name: adminLastName,

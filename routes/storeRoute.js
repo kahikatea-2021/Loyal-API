@@ -26,7 +26,23 @@ router.get('/:id', (req, res) => {
 })
 	
 router.get('/', (req, res) => {
-	getStores()
+	const { uid } = req.user
+	getStoresById(uid)
+		.then( async (store) => {
+			res.json({
+				...store,
+				qrCode: await generateQRCode(JSON.stringify(store))
+			})
+		})
+		.catch((err) => {
+			console.error(err)
+			res.status(500).json({
+				error: {
+					title: 'Unable to retrieve store'
+				}
+			})
+		})
+	/*getStores()
 		.then((stores) => {
 			return res.json({ stores })
 		})
@@ -37,7 +53,7 @@ router.get('/', (req, res) => {
 					title: 'Unable to retrieve store list'
 				}
 			})
-		})
+		})*/
 })
 
 module.exports = router

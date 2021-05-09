@@ -3,10 +3,11 @@ const router = require('express').Router()
 
 router.patch('/', (req, res) => {
     
-	const { userId, storeId } = req.body
+	const { storeId } = req.body
+	const { uid } = req.user
 	console.log(req.body)
-
-	stampLoyaltyCard(userId, Number(storeId)).then( data => {
+	console.log(uid)
+	stampLoyaltyCard(uid, Number(storeId)).then( data => {
 		res.json(data)
 	}).catch( err => {
 		console.error(err.message)
