@@ -10,6 +10,8 @@ function createUser(isStore, {email, password, firstName, lastName, phone}) {
 	}).then( userRecord => {
 		return auth().setCustomUserClaims( userRecord.uid, {
 			shop: isStore
+		}).then( () => {
+			return userRecord
 		})
 	})
 
