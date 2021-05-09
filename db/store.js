@@ -26,7 +26,19 @@ function getStoresById (id, db = connection) {
 		})
 }
 
+function createStore ({ firebaseId, storeName, adminFirstName, adminLastName, email, phone, address }, db = connection) {
+	return db ('stores').insert({
+		firebase_id: firebaseId,
+		store_name: storeName,
+		admin_first_name: adminFirstName,
+		admin_last_name: adminLastName,
+		address: address,
+	})
+
+}
+
 module.exports = {
 	getStores,
-	getStoresById
+	getStoresById,
+	createStore
 }
