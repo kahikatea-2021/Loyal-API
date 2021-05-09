@@ -26,7 +26,7 @@ function getStoresById (id, db = connection) {
 		})
 }
 
-function createStore ({ firebaseId, storeName, adminFirstName, adminLastName, email, phone, address }, db = connection) {
+function createStore ({ firebaseId, storeName, adminFirstName, adminLastName, address }, db = connection) {
 	return db ('stores').insert({
 		firebase_id: firebaseId,
 		store_name: storeName,
