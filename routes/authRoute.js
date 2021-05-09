@@ -7,7 +7,10 @@ router.post('/register', (req, res) => {
 			token: token
 		})
 	}).catch(err => {
-		res.status(500).send(err.code)
+		console.log(err.errorInfo)
+		res.status(500).json({
+			message: err.errorInfo.code
+		})
 	})
 })
 
