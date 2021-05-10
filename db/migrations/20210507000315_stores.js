@@ -6,6 +6,8 @@ exports.up = (knex) => {
 		table.string('admin_first_name').notNullable()
 		table.string('admin_last_name').notNullable()
 		table.string('address')
+		table.string('logo_url')
+		table.string('instagram_handle')
 	})
 }
   
