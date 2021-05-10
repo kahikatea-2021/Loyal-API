@@ -87,13 +87,13 @@ function stampLoyaltyCard(userId, storeId, db = connection) {
     
 }
 
-function storeCreateCard({ storeId, rewardThreshold, reward, instagramHandle, storeLogo }, db = connection) {
+function storeCreateCard({ storeId, rewardThreshold, reward, instagramHandle, image }, db = connection) {
 	return db('cards').insert({
 		store_id: storeId,
 		reward_threshold: rewardThreshold,
 		reward: reward,
 		instagram_handle: instagramHandle,
-		store_logo: storeLogo
+		store_logo: image
 	})
 }
 

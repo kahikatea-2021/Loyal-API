@@ -1,5 +1,6 @@
 const { createUser } = require('../auth/account')
-const { getStoresById, getStores, storeCreateCard, createStore } = require('../db/store')
+const { getStoresById, getStores, createStore } = require('../db/store')
+const { storeCreateCard } = require('../db/card')
 const { generateQRCode } = require('../util/qrCode')
 
 const router = require('express').Router()
@@ -27,8 +28,10 @@ router.get('/:id', (req, res) => {
 	
 router.get('/', (req, res) => {
 	const { uid } = req.user
+	console.log(uid)
 	getStoresById(uid)
 		.then( async (store) => {
+			console.log(store)
 			res.json({
 				...store,
 				qrCode: await generateQRCode(JSON.stringify(store))
@@ -57,7 +60,13 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-	storeCreateCard(req.body).then(ids => {
+	console.log('hello there')
+	console.log(req.body)
+	const data = {
+		...req.body,
+		storeId: req.user.uid
+	}
+	storeCreateCard(data).then(ids => {
 		res.json({
 			id: ids[0],
 			...req.body
