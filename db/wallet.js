@@ -17,7 +17,7 @@ function getUserWallet(userId, storeId, db = connection) {
 	}
 }
 
-function walletAddCard({userId, cardId}, db = connection) {
+function walletAddCard({userId, cardId}, db = connection) {	
 	return db('wallets')
 		.insert({
 			user_id: userId,
@@ -25,7 +25,14 @@ function walletAddCard({userId, cardId}, db = connection) {
 		})
 }
 
+function walletDeleteCard(cardId, db = connection) {
+	return db('wallets')
+		.where('id', cardId,)
+		.delete()
+}
+
 module.exports = {
 	getUserWallet,
-	walletAddCard
+	walletAddCard,
+	walletDeleteCard
 }

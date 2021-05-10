@@ -1,4 +1,4 @@
-const { getStoresById, getStores } = require('../db/store')
+const { getStoresById, getStores, storeCreateCard } = require('../db/store')
 const { generateQRCode } = require('../util/qrCode')
 
 const router = require('express').Router()
@@ -37,6 +37,22 @@ router.get('/', (req, res) => {
 				}
 			})
 		})
+})
+
+router.post('/', (req, res) => {
+	storeCreateCard(req.body).then(ids => {
+		res.json({
+			id: ids[0],
+			...req.body
+		}) 
+	}).catch(err => {
+		console.error(err.message)
+		res.status(500).json({
+			error: {
+				title: 'Unable to create a loyalty card'
+			}
+		})
+	})
 })
 
 module.exports = router

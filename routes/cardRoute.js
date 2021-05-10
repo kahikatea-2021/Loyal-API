@@ -1,3 +1,4 @@
+
 const {  getStoreCards, storeCreateCard, resetLoyaltyCard } = require('../db/card')
 const { request } = require('../server')
 const router = require('express').Router()
@@ -46,5 +47,6 @@ router.post('/', (req, res) => {
 		})
 	})
 })
+
 
 module.exports = router
