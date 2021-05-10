@@ -15,7 +15,6 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
 	walletAddCard(req.body).then(ids => {
-		console.log('add', body)
 		res.json({
 			id: ids[0],
 			...req.body
@@ -32,9 +31,10 @@ router.post('/', (req, res) => {
 
 // DELETE /delete a coffee card from the wallet
 
-router.delete('/', (req, res) => {
-	walletDeleteCard(req.body).then(ids => {
-		console.log('delete', body)
+router.delete('/:id', (req, res) => {
+	console.log(req.body)
+	
+	walletDeleteCard(Number(req.params.id)).then(ids => {
 		res.json({
 			id: ids[0],
 			...req.body

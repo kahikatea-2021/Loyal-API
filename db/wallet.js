@@ -7,9 +7,7 @@ function getUserWallet(userId, db = connection) {
 		.select()
 }
 
-function walletAddCard({userId, cardId}, db = connection) {
-	console.log('addcard', cardId)
-	
+function walletAddCard({userId, cardId}, db = connection) {	
 	return db('wallets')
 		.insert({
 			user_id: userId,
@@ -18,8 +16,6 @@ function walletAddCard({userId, cardId}, db = connection) {
 }
 
 function walletDeleteCard(cardId, db = connection) {
-	console.log('delete', cardId)
-	
 	return db('wallets')
 		.where('id', cardId,)
 		.delete()
