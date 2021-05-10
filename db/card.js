@@ -41,20 +41,29 @@ function stampLoyaltyCard(userId, storeId, db = connection) {
 					user_id: userId,
 					stamp_count: 1
 				}).then( ids => {
+
 					return db('cards')
 						.where('store_id', storeId)
 						.select()
 						.first()
 						.then( card => {
-							return {
-								id: ids[0],
-								stampCount: 1,
-								storeId,
-								userId,
-								shouldRedeem: false,
-								rewardThreshold: card.rewardThreshold,
-								reward: card.reward
-							}
+
+							return db('wallets')
+								.insert({
+									user_id: userId,
+									card_id: card.id
+								}).then( () => {
+									return {
+										id: ids[0],
+										stampCount: 1,
+										storeId,
+										userId,
+										shouldRedeem: false,
+										rewardThreshold: card.rewardThreshold,
+										reward: card.reward
+									}
+								} )
+							
 						})
 					
 				})

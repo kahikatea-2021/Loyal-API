@@ -2,6 +2,7 @@ const { createUser } = require('../auth/account')
 const { getStoresById, getStores, createStore } = require('../db/store')
 const { storeCreateCard } = require('../db/card')
 const { generateQRCode } = require('../util/qrCode')
+const { storage } = require('../auth')
 
 const router = require('express').Router()
 
@@ -66,6 +67,12 @@ router.post('/', (req, res) => {
 		...req.body,
 		storeId: req.user.uid
 	}
+
+	const { image } = req.body
+	storeImage(image).then( 
+		
+	)
+
 	storeCreateCard(data).then(ids => {
 		res.json({
 			id: ids[0],

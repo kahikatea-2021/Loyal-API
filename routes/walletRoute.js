@@ -2,14 +2,11 @@ const { getUserWallet, walletAddCard } = require('../db/wallet')
 
 const router = require('express').Router()
 
-router.get('/:id', (req, res) => {
-	const userId = req.params.id
-	const storeId = req.query.storeId
-	if (userId) {
-		getUserWallet(userId, storeId).then( userWallet => {
-			res.json(userWallet)
-		})
-	}
+router.get('/', (req, res) => {
+	const { uid } = req.user
+	getUserWallet(uid).then( userWallet => {
+		res.json(userWallet)
+	})
 })
 
 // POST /add cards to wallet

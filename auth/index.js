@@ -5,11 +5,14 @@ const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS
 function initialize() {
 	admin.initializeApp({
 		credential: admin.credential.cert(serviceAccount),
-		databaseURL: 'https://coffee-loyalty-app-312823-default-rtdb.firebaseio.com'
+		databaseURL: 'https://coffee-loyalty-app-312823-default-rtdb.firebaseio.com',
+		storageBucket: 'loyal-cbd69.appspot.com',
+
 	})
 }
 
 module.exports = {
 	initialize,
+	storage: admin.storage,
 	auth: admin.auth
 }
