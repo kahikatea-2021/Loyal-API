@@ -1,7 +1,6 @@
 const {auth} = require('../auth')
 
 function createUser(isStore, {email, password, firstName, lastName, phone}) {
-
 	return auth().createUser({
 		email: email,
 		password: password,

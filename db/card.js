@@ -29,22 +29,47 @@ function stampLoyaltyCard(userId, storeId, db = connection) {
 			'store_users.store_id as storeId', 
 			'store_users.user_id as userId',
 			'cards.reward_threshold as rewardThreshold',
-			'cards.reward'
+			'cards.reward',
+			'stores.address'
 		)
 		.first()
 		.then( userCard => {
-			console.log(userCard)
-			if (!userCard)
-				throw new Error()
 			
-			return {
-				id: userCard.id,
-				stampCount: userCard.stampCount < userCard.rewardThreshold ? userCard.stampCount+1 : userCard.stampCount,
-				storeId: userCard.storeId,
-				userId: userCard.userId,
-				shouldRedeem: userCard.stampCount >= userCard.rewardThreshold-1,
-				rewardThreshold: userCard.rewardThreshold,
-				reward: userCard.reward
+			if (!userCard) {
+				return db('store_users').insert({
+					store_id: storeId,
+					user_id: userId,
+					stamp_count: 1
+				}).then( ids => {
+					return db('cards')
+						.where('store_id', storeId)
+						.select()
+						.first()
+						.then( card => {
+							return {
+								id: ids[0],
+								stampCount: 1,
+								storeId,
+								userId,
+								shouldRedeem: false,
+								rewardThreshold: card.rewardThreshold,
+								reward: card.reward
+							}
+						})
+					
+				})
+			} else {
+			
+				return {
+					id: userCard.id,
+					stampCount: userCard.stampCount < userCard.rewardThreshold ? userCard.stampCount+1 : userCard.stampCount,
+					storeId: userCard.storeId,
+					userId: userCard.userId,
+					shouldRedeem: userCard.stampCount >= userCard.rewardThreshold-1,
+					address: userCard.address,
+					rewardThreshold: userCard.rewardThreshold,
+					reward: userCard.reward
+				}
 			}
 		}).then(userCard => {
 			if (userCard && !userCard.shouldReedem) {

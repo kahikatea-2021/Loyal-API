@@ -29,9 +29,7 @@ router.post('/store/register', (req, res) => {
 			}).catch(err => {
 				console.error(err.message)
 				res.status(500).json({
-					error: {
-						title: 'Unable to register your Store'
-					}
+					message: 'Unable to register your Store'
 				})
 			})
 		}).catch(err => {

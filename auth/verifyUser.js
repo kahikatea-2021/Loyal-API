@@ -10,9 +10,10 @@ function verifyUser(claim) {
 			auth().verifyIdToken(token).then( decodedToken => {
 				auth().getUser(decodedToken.uid).then( userData => {
 					if (claim.shop === userData.customClaims.shop) {
-						req.user = decodedToken
-						next()
+						
 					}
+					req.user = decodedToken
+					next()
 				})
 			}).catch( () => {
 				res.status(500).json({

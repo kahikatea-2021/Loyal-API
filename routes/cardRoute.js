@@ -1,5 +1,4 @@
-const {  getStoreCards, storeCreateCard, resetLoyaltyCard } = require('../db/card')
-const { request } = require('../server')
+const {  getStoreCards, storeCreateCard } = require('../db/card')
 const router = require('express').Router()
 
 router.get('/', (req, res) => {
@@ -15,20 +14,6 @@ router.get('/', (req, res) => {
 			})
 		})
 	}
-})
-
-router.patch('/', (req, res) => {
-	console.log(req.body)
-	resetLoyaltyCard(req.body).then(result => {
-		res.json(result)
-	}).catch( err => {
-		console.error(err.message)
-		res.status(500).json({
-			error: {
-				title: 'Unable to reset loyalty card'
-			}
-		})
-	})
 })
 
 router.post('/', (req, res) => {
