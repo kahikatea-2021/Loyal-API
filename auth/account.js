@@ -1,20 +1,17 @@
 const {auth} = require('../auth')
 
-function createUser({email, password, userName, firstName, lastName, phone}) {
-	
-	const customClaim = {
-		userName: userName,
-		firstName: firstName,
-		lastName: lastName,
-		phoneNumber: phone,
-	}
-
+function createUser(isStore, {email, password, firstName, lastName, phone}) {
 	return auth().createUser({
 		email: email,
 		password: password,
-        
+		displayName: `${firstName} ${lastName}`,
+		//phoneNumber: phone
 	}).then( userRecord => {
-		return auth().createCustomToken(userRecord.uid, customClaim)
+		return auth().setCustomUserClaims( userRecord.uid, {
+			shop: isStore
+		}).then( () => {
+			return userRecord
+		})
 	})
 
 }

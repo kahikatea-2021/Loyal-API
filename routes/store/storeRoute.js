@@ -1,5 +1,5 @@
-const { getStoresById, getStores, storeCreateCard } = require('../db/store')
-const { generateQRCode } = require('../util/qrCode')
+const { getStoresById } = require('../../db/store/store')
+const { generateQRCode } = require('../../util/qrCode')
 
 const router = require('express').Router()
 
@@ -25,34 +25,23 @@ router.get('/:id', (req, res) => {
 })
 	
 router.get('/', (req, res) => {
-	getStores()
-		.then((stores) => {
-			return res.json({ stores })
+	console.log(req.body)
+	const { uid } = req.user
+	getStoresById(uid)
+		.then( async (store) => {
+			res.json({
+				...store.store,
+				qrCode: await generateQRCode(JSON.stringify(store.qrCodeData))
+			})
 		})
 		.catch((err) => {
 			console.error(err)
 			res.status(500).json({
 				error: {
-					title: 'Unable to retrieve store list'
+					title: 'Unable to retrieve store'
 				}
 			})
 		})
-})
-
-router.post('/', (req, res) => {
-	storeCreateCard(req.body).then(ids => {
-		res.json({
-			id: ids[0],
-			...req.body
-		}) 
-	}).catch(err => {
-		console.error(err.message)
-		res.status(500).json({
-			error: {
-				title: 'Unable to create a loyalty card'
-			}
-		})
-	})
 })
 
 module.exports = router

@@ -5,6 +5,16 @@ const db = require('../db/store')
 
 jest.mock('../db/store')
 
+const mockStore = {
+	id: 1,
+	store_name: 'Cracking Coffee',
+	admin_first_name: 'Crack',
+	admin_last_name: 'Coffee',
+	email: 'crackincoffe@coffee.com',
+	phone: 23456789,
+	address: '2 Coffee Crescent, Coffeeville, Beans, 1020',
+}
+
 describe('GET /api/v1/stores', () => {
 	it('responds with stores on res body', () => {
 		db.getStores.mockImplementation(() => Promise.resolve(
@@ -16,23 +26,23 @@ describe('GET /api/v1/stores', () => {
 				email: 'crackincoffe@coffee.com',
 				phone: 23456789,
 				address: '2 Coffee Crescent, Coffeeville, Beans, 1020', 
-			},
-			{
-				id: 2,
-				store_name: 'Brew Coffee',
-				admin_first_name: 'Brew',
-				admin_last_name: 'Coffee',
-				email: 'brewcoffe@coffee.com',
-				phone: 54326789,
-				address: '5 Brew Crescent, Brewville, Beans, 1200',  
-			}]
+			}],
+			// {
+			// 	id: 2,
+			// 	store_name: 'Brew Coffee',
+			// 	admin_first_name: 'Brew',
+			// 	admin_last_name: 'Coffee',
+			// 	email: 'brewcoffe@coffee.com',
+			// 	phone: 54326789,
+			// 	address: '5 Brew Crescent, Brewville, Beans, 1200',  
+			// }]
 		))
 		return request(server)
-			.get('api/v1/stores')
+			.get('/api/v1/stores')
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.then(res => {
-				expect(res.body.store).toHaveLength(2)
+				expect(res.body.stores).toHaveLength(1)
 				return null
 			})
 	})
@@ -47,7 +57,7 @@ it('responds with 500 and correct error object on DB error', () => {
 		.expect('Content-Type', /json/)
 		.expect(500)
 		.then(res => {
-			expect(res.body.error.title).toBe('Unable to retrieve stores')
+			expect(res.body.error.title).toBe('Unable to retrieve store list')
 			return null
 		})
 })
