@@ -1,37 +1,37 @@
-const connection = require('./connection')
+const connection = require('../connection')
+const { getUserCard } = require('./userCard')
 
-function getStoreCards(id, db = connection) {
-	return db('cards').where('store_id', id)
-		.select()
-}
-
-function resetLoyaltyCard({userId, storeId}, db = connection) {
-	return db('store_users')
-		.where('store_users.store_id', storeId)
+function resetLoyaltyCard({userId, cardId}, db = connection) {
+	return db('wallets')
+		.where('wallets.card_id', cardId)
 		.where('user_id', userId)
 		.update({
-			stamp_count: -1
+			stamp_count: 0
 		}).then(() => {
-			return stampLoyaltyCard(userId, storeId)
+			return getUserCard({cardId, userId})
 		})
 }
 
-function stampLoyaltyCard(userId, storeId, db = connection) {
+function stampLoyaltyCard(userId, cardId, count, db = connection) {
 
-	return db('store_users')
-		.where('store_users.store_id', storeId)
-		.where('user_id', userId)
-		.leftJoin('cards', 'store_users.store_id', 'cards.store_id')
-		.leftJoin('stores', 'store_users.store_id', 'stores.id')
-		.select(
-			'store_users.id', 
-			'store_users.stamp_count as stampCount', 
-			'store_users.store_id as storeId', 
-			'store_users.user_id as userId',
-			'cards.reward_threshold as rewardThreshold',
-			'cards.reward',
-			'stores.address'
-		)
+	return db('wallets')
+		.where('wallets.card_id', cardId)
+		.leftJoin('cards', 'cards.id', 'wallets.card_id')
+		.leftJoin('stores', 'stores.id', 'cards.store_id')
+		.update({
+			stamp_count: count
+		})
+    
+}
+
+module.exports = {
+	stampLoyaltyCard,
+	resetLoyaltyCard
+}
+
+/*
+
+        .select()
 		.first()
 		.then( userCard => {
 			
@@ -93,20 +93,4 @@ function stampLoyaltyCard(userId, storeId, db = connection) {
 			}
 			return userCard
 		})
-    
-}
-
-function getUserCard({ userId, storeId}, db = connection) {
-	return  db('store_users')
-		.where('store_users.store_id', storeId)
-		.where('user_id', userId)
-		.select()
-		.first()
-}
-
-module.exports = {
-	stampLoyaltyCard,
-	getStoreCards,
-	getUserCard,
-	resetLoyaltyCard
-}
+        */

@@ -1,4 +1,4 @@
-const { getStoresById } = require('../../db/store')
+const { getStoresById } = require('../../db/store/store')
 const { generateQRCode } = require('../../util/qrCode')
 
 const router = require('express').Router()
@@ -25,13 +25,13 @@ router.get('/:id', (req, res) => {
 })
 	
 router.get('/', (req, res) => {
+	console.log(req.body)
 	const { uid } = req.user
 	getStoresById(uid)
 		.then( async (store) => {
-			console.log(store)
 			res.json({
-				...store,
-				qrCode: await generateQRCode(JSON.stringify(store))
+				...store.store,
+				qrCode: await generateQRCode(JSON.stringify(store.qrCodeData))
 			})
 		})
 		.catch((err) => {

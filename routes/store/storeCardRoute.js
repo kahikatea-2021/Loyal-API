@@ -5,11 +5,13 @@ const { getStoreCard } = require('../../db/store/storeCard')
 const { storeImage } = require('../../imageStorage/image')
 const createErrorJsonMessage = require('../../util/errorFormatter')
 
-router.post('/', express.json({limit: '1mb'}), (req, res) => {
+router.post('/', express.json({limit: '50mb'}), (req, res) => {
 	const data = {
 		...req.body,
 		storeId: req.user.uid
 	}
+
+	console.log(data)
 
 	const { image } = req.body
 

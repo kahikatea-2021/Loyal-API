@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { createUser } = require('../auth/account')
-const { createStore } = require('../db/store')
+const { createStore } = require('../db/store/store')
 
 router.post('/register', (req, res) => {
 	createUser(false, req.body).then( token => {

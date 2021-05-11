@@ -7,8 +7,10 @@ function storeImage(content) {
             
 		})
 	} 
-
-	throw new Error('Must have the content')
+	return Promise.resolve({
+		url: null
+	})
+	//throw new Error('Must have the content')
 }
 
 module.exports = {
