@@ -5,6 +5,8 @@ exports.up = (knex) => {
 		table.string('store_id').unique().references('stores.id').notNullable()
 		table.integer('reward_threshold').notNullable()
 		table.string('reward').notNullable()
+		table.string('logo_url')
+		table.string('instagram_handle')
 	})
 }
   
