@@ -6,12 +6,12 @@ const { storeImage } = require('../../imageStorage/image')
 const createErrorJsonMessage = require('../../util/errorFormatter')
 
 router.post('/', express.json({limit: '50mb'}), (req, res) => {
+	console.log(req.user)
+	
 	const data = {
 		...req.body,
 		storeId: req.user.uid
 	}
-
-	console.log(data)
 
 	const { image } = req.body
 

@@ -5,6 +5,7 @@ function getStores (db = connection) {
 }
 
 function getStoresById(id, db = connection) {
+	console.log(id)
 	return db ('stores')
 		.where('stores.id', id)
 		.select(
@@ -15,6 +16,7 @@ function getStoresById(id, db = connection) {
 			'address',
 		)
 		.then((result) =>{
+			console.log(result)
 			const store = result[0]
 
 			return db('cards')

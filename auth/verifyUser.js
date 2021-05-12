@@ -6,8 +6,10 @@ function verifyUser(claim) {
 		const authorizationHeader = req.headers.authorization
 		if (authorizationHeader) {
 			const token = authorizationHeader.split(' ')[1]
-        
+			
 			auth().verifyIdToken(token).then( decodedToken => {
+				console.log('hfdfdfdfdhdhdh')
+				
 				auth().getUser(decodedToken.uid).then( userData => {
 					if (claim.shop === userData.customClaims.shop) {
 						
@@ -15,7 +17,8 @@ function verifyUser(claim) {
 					req.user = decodedToken
 					next()
 				})
-			}).catch( () => {
+			}).catch( err => {
+				console.log(err)
 				res.status(500).json({
 					error: {
 						title: 'Unauthorized'
@@ -24,6 +27,7 @@ function verifyUser(claim) {
 			})
 
 		} else {
+			console.log('hdhdhdh')
 			res.status(401).json({
 				error: {
 					title: 'Unauthorized'

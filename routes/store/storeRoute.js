@@ -26,6 +26,7 @@ router.get('/:id', (req, res) => {
 	
 router.get('/', (req, res) => {
 	console.log(req.body)
+	console.log(req.user)
 	const { uid } = req.user
 	getStoresById(uid)
 		.then( async (store) => {
