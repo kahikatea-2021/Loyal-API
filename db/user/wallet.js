@@ -11,6 +11,7 @@ function getUserWallet(userId, db = connection) {
 			'user_id as userId',
 			'stamp_count as stampCount',
 			'store_name as storeName',
+			'reward',
 			'address',
 			'instagram_handle as instagramHandle',
 			'logo_url as logo',
