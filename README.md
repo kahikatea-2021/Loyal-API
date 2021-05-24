@@ -2,8 +2,11 @@
 
 This is the API for the Loyal coffee card rewards app.
 
+## Installation
+
+Clone this repo, `cd` into the new directory and then:
+
 ```
-Clone the project
 npm i
 npm run dev
 ```
